@@ -7,23 +7,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model estado {
-  id                           Int      @id @default(autoincrement())
-  nome                         String   @db.VarChar(45)
-  gastos_gastos_estadoToestado gastos[] @relation("gastos_estadoToestado")
-}
-
 model gastos {
-  id                           Int              @id @default(autoincrement())
-  nome                         String?          @db.VarChar(45)
-  valor                        Float?           @db.Float
-  mes                          Int?             @db.TinyInt
-  ano                          Int?
-  estado                       Int
-  estado_gastos_estadoToestado estado           @relation("gastos_estadoToestado", fields: [estado], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_gastos_estado1")
-  usuariosgastos               usuariosgastos[]
-
-  @@index([estado], map: "fk_gastos_estado1")
+  id             Int              @id @default(autoincrement())
+  nome           String?          @db.VarChar(45)
+  valor          Float?           @db.Float
+  mes            Int?             @db.TinyInt
+  ano            Int?
+  estado         Boolean
+  usuariosgastos usuariosgastos[]
 }
 
 model gastosrecorrentes {

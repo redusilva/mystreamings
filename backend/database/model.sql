@@ -17,12 +17,6 @@ CREATE TABLE IF NOT EXISTS `gastosRecorrentes` (
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `estado` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE = InnoDB;
-
 CREATE TABLE IF NOT EXISTS `usuariosGastosRecorrentes` (
   `idGastosRecorrentes` INT NOT NULL,
   `idUsuarios` INT NOT NULL,
@@ -45,13 +39,8 @@ CREATE TABLE IF NOT EXISTS `gastos` (
   `valor` FLOAT NULL,
   `mes` TINYINT NULL,
   `ano` INT NULL,
-  `estado` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `fk_gastos_estado1`
-    FOREIGN KEY (`estado`)
-    REFERENCES `estado` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION
+  `estado` TINYINT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `usuariosGastos` (

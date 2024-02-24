@@ -29,7 +29,7 @@ export class UserController {
                 return res.status(400).json({ message: "Email já cadastrado na base de dados!" });
             }
 
-            const salt = bcrypt.genSaltSync(Number(process.env.PASSWORD_SALTS));
+            const salt = await bcrypt.genSalt(12);
             const hash = bcrypt.hashSync(data.password, salt);
 
             const userData: Newuser = {
@@ -106,8 +106,8 @@ export class UserController {
                 return res.status(400).json({ message: "Usuário não encontrado!" });
             }
 
-            const checkPassword = bcrypt.compareSync(user.senha, data.password);
-            console.log("user.senha", data.password);
+            const checkPassword = await bcrypt.compare(data.password, user.senha);
+            console.log("data.password", data.password);
             console.log("user.senha", user.senha);
             console.log("checkPassword", checkPassword);
             if (!checkPassword) {
