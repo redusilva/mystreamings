@@ -28,7 +28,7 @@ model usuarios {
   id                        Int                         @id @default(autoincrement())
   nome                      String?                     @db.VarChar(45)
   email                     String                      @unique(map: "email_UNIQUE") @db.VarChar(45)
-  senha                     String                      @db.VarChar(45)
+  senha                     String                      @db.VarChar(255)
   usuariosgastos            usuariosgastos[]
   usuariosgastosrecorrentes usuariosgastosrecorrentes[]
 }
@@ -45,10 +45,10 @@ model usuariosgastos {
 
 model usuariosgastosrecorrentes {
   idGastosRecorrentes Int
-  idUsuarios          Int
+  idUsuario           Int
   gastosrecorrentes   gastosrecorrentes @relation(fields: [idGastosRecorrentes], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_gastosRecorrentes_has_usuarios_gastosRecorrentes1")
-  usuarios            usuarios          @relation(fields: [idUsuarios], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_gastosRecorrentes_has_usuarios_usuarios1")
+  usuarios            usuarios          @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_gastosRecorrentes_has_usuarios_usuarios1")
 
-  @@id([idGastosRecorrentes, idUsuarios])
-  @@index([idUsuarios], map: "fk_gastosRecorrentes_has_usuarios_usuarios1")
+  @@id([idGastosRecorrentes, idUsuario])
+  @@index([idUsuario], map: "fk_gastosRecorrentes_has_usuarios_usuarios1")
 }

@@ -3,9 +3,9 @@ USE `medeve`;
 
 CREATE TABLE IF NOT EXISTS `usuarios` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(45) NULL,
-  `email` VARCHAR(45) NOT NULL,
-  `senha` VARCHAR(45) NOT NULL,
+  `nome` VARCHAR(100) NULL,
+  `email` VARCHAR(100) NOT NULL,
+  `senha` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC)
 ) ENGINE = InnoDB;
