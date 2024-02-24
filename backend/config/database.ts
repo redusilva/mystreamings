@@ -1,7 +1,3 @@
-import { MongoClient } from "mongodb";
-import 'dotenv/config';
+import { PrismaClient } from '@prisma/client'
 
-const uri = process.env.DATABASE_URL as string;
-const client = new MongoClient(uri);
-
-export default client;
+export const prisma = new PrismaClient();

@@ -1,41 +1,42 @@
+import { PrismaClient, Prisma } from '@prisma/client';
+import { DefaultArgs } from '@prisma/client/runtime/library';
+import { Newuser } from '../interfaces/UserInterface';
 import 'dotenv/config';
-import { Db, ObjectId } from 'mongodb';
-
-interface NewUser {
-    firstName: string;
-    secondName: string;
-    email: string;
-    password: string;
-}
 
 export class UserModel {
 
-    async findUserById(id: string, database: Db) {
-        const table = database.collection("users");
-        return table.findOne({ _id: new ObjectId(id) }, {
-            projection: {
-                password: 0
+    async findUserById(id: number, database: PrismaClient<Prisma.PrismaClientOptions, never, DefaultArgs>) {
+        return database.usuarios.findUnique({
+            where: {
+                id: id,
+            },
+            select: {
+                id: true,
+                email: true,
+                nome: true,
             }
         });
     }
 
-    async findUserByEmail(email: string, database: Db) {
-        const table = database.collection("users");
-        return table.findOne({ email });
+    async findUserByEmail(email: string, database: PrismaClient<Prisma.PrismaClientOptions, never, DefaultArgs>) {
+        return database.usuarios.findUnique({
+            where: {
+                email: email,
+            }
+        });
     }
 
-    async createUser(data: NewUser, database: Db) {
-        const table = database.collection("users");
-
-        const createdUser = await table.insertOne({
-            ...data,
-            createdAt: new Date(),
-            updatedAt: new Date(),
-            active: true,
-            admin: false
-        });
-
-        return createdUser.insertedId;
+    async createUser(data: Newuser, database: PrismaClient<Prisma.PrismaClientOptions, never, DefaultArgs>) {
+        return database.usuarios.create({
+            data: {
+                email: data.email,
+                senha: data.password,
+                nome: data.name
+            },
+            select: {
+                id: true,
+            }
+        })
     }
 
 }
